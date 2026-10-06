@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Wind, Zap, Activity, Gauge, CloudLightning } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Wind, Zap, Activity, Gauge } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch
@@ -91,14 +91,28 @@ export function WindLog() {
         ))}
       </div>
 
-      <div className="bg-card rounded-lg p-6 shadow-md flex-1 flex flex-col min-h-0">
-        <div className="flex items-center justify-between mb-6 shrink-0">
-          <h3 className="text-base font-bold text-foreground">Generation Curve (24h)</h3>
-          <CloudLightning size={20} className="text-muted-foreground" />
+      <div className="bg-card rounded-lg p-6 shadow-md border border-border flex-1 flex flex-col min-h-0">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 shrink-0">
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-base font-bold text-foreground">Generation Curve (24h)</h3>
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-semibold border border-cyan-500/20">
+                Wind Power Generation
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Wind turbine generation telemetry across 24 hourly intervals</p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs bg-muted/50 px-2.5 py-1 rounded border border-border text-muted-foreground">
+            <span><strong>X:</strong> Time (0–23h)</span>
+            <span className="text-border">|</span>
+            <span><strong>Y:</strong> Power (kW)</span>
+          </div>
         </div>
+
         <div className="flex-1 w-full min-h-0">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={data.chartData} margin={{ top: 15, right: 25, left: 15, bottom: 25 }}>
               <defs>
                 <linearGradient id="colorWind" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
@@ -106,11 +120,26 @@ export function WindLog() {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-              <XAxis dataKey="time" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}kW`} />
+              <XAxis 
+                dataKey="time" 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={11} 
+                tickLine={false} 
+                axisLine={false} 
+                label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+              />
+              <YAxis 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={11} 
+                tickLine={false} 
+                axisLine={false} 
+                tickFormatter={(value) => `${value} kW`} 
+                label={{ value: 'Turbine Power (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+              />
               <Tooltip 
                 contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                itemStyle={{ color: 'hsl(var(--foreground))' }}
+                itemStyle={{ color: 'hsl(var(--foreground))', fontSize: '12px' }}
+                formatter={(value: any) => [`${value} kW`, 'Wind Generation']}
               />
               <Area type="monotone" dataKey="power" stroke="#06b6d4" strokeWidth={3} fillOpacity={1} fill="url(#colorWind)" />
             </AreaChart>

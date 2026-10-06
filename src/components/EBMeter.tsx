@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Zap, AlertCircle, Activity, Gauge, Battery, Radio, Waves } from 'lucide-react';
 import { cn } from '../utils';
@@ -94,22 +94,74 @@ export function EBMeter() {
         </div>
       </div>
 
-      <div className="bg-card rounded-lg p-6 shadow-md">
-        <h3 className="text-base font-bold text-foreground mb-6">Voltage Imbalance (L-L)</h3>
-        <div className="h-[350px] w-full">
+      <div className="bg-card rounded-lg p-6 shadow-md border border-border">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-base font-bold text-foreground">Voltage Imbalance (L-L)</h3>
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-semibold border border-indigo-500/20">
+                3-Phase Monitoring
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Line-to-Line Voltage measurements across 24 hourly intervals</p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Axis summary badge */}
+            <div className="flex items-center gap-2 text-xs bg-muted/50 px-2.5 py-1 rounded border border-border text-muted-foreground">
+              <span><strong>X:</strong> Time (0–23h)</span>
+              <span className="text-border">|</span>
+              <span><strong>Y:</strong> Voltage (V)</span>
+            </div>
+
+            {/* Legend series */}
+            <div className="flex items-center space-x-3 text-xs font-medium">
+              <div className="flex items-center space-x-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                <span className="text-foreground">L1-L2 (R-Y)</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                <span className="text-foreground">L2-L3 (Y-B)</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                <span className="text-foreground">L3-L1 (B-R)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-[340px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-              <XAxis dataKey="time" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-              <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} domain={['dataMin - 5', 'dataMax + 5']} />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
-                itemStyle={{ color: '#e2e8f0' }}
+            <LineChart data={data} margin={{ top: 15, right: 25, left: 15, bottom: 25 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+              <XAxis 
+                dataKey="time" 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={11} 
+                tickLine={false} 
+                axisLine={false} 
+                label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
               />
-              <ReferenceLine y={415} stroke="#334155" strokeDasharray="3 3" />
-              <Line type="monotone" dataKey="l1" name="L1-L2" stroke="#ef4444" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="l2" name="L2-L3" stroke="#f59e0b" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="l3" name="L3-L1" stroke="#3b82f6" strokeWidth={2} dot={false} />
+              <YAxis 
+                stroke="hsl(var(--muted-foreground))" 
+                fontSize={11} 
+                tickLine={false} 
+                axisLine={false} 
+                domain={['dataMin - 5', 'dataMax + 5']} 
+                tickFormatter={(val) => `${Math.round(val)} V`}
+                label={{ value: 'Line Voltage (V)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+              />
+              <Tooltip
+                contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
+                itemStyle={{ color: 'hsl(var(--foreground))', fontSize: '12px' }}
+                formatter={(value: any, name: any) => [`${Number(value).toFixed(1)} V`, name]}
+              />
+              <ReferenceLine y={415} stroke="#64748b" strokeDasharray="3 3" label={{ value: 'Nominal 415V', fill: '#64748b', fontSize: 10, position: 'right' }} />
+              <Line type="monotone" dataKey="l1" name="L1-L2" stroke="#ef4444" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="l2" name="L2-L3" stroke="#f59e0b" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="l3" name="L3-L1" stroke="#3b82f6" strokeWidth={2.5} dot={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>

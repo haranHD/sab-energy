@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,7 +9,6 @@ import {
   Settings,
   Bell,
   Activity,
-  AlertTriangle,
   Moon,
   Database,
   ChevronDown,
@@ -104,7 +103,7 @@ function Sidebar() {
 }
 
 function SidebarMenuGroup({ item }: { item: any }) {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   
   return (
     <div className="space-y-1">
@@ -178,9 +177,9 @@ function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: bool
 }
 
 function App() {
-  const [isDark, setIsDark] = React.useState(false);
+  const [isDark, setIsDark] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
