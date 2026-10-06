@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Sun, ThermometerSun, Zap, Cloud, Activity } from 'lucide-react';
+import { Sun, ThermometerSun, Zap, Activity } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch

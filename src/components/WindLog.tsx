@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wind, Zap, Activity, Gauge, CloudLightning } from 'lucide-react';
+import { Wind, Zap, Activity, Gauge } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch

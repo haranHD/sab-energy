@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BatteryCharging, Zap, Gauge, Droplets, Thermometer, Activity } from 'lucide-react';
+import { BatteryCharging, Zap, Droplets, Thermometer, Activity } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch for DG Set (Diesel Generator)
