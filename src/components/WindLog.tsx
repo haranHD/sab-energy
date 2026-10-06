@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Wind, Zap, Activity, Gauge } from 'lucide-react';
+import { Wind, Zap, Activity, Gauge, CloudLightning } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch
@@ -115,8 +115,8 @@ export function WindLog() {
             <AreaChart data={data.chartData} margin={{ top: 15, right: 25, left: 15, bottom: 25 }}>
               <defs>
                 <linearGradient id="colorWind" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -125,7 +125,7 @@ export function WindLog() {
                 stroke="hsl(var(--muted-foreground))" 
                 fontSize={11} 
                 tickLine={false} 
-                axisLine={false} 
+                axisLine={false}
                 label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
               />
               <YAxis 
@@ -133,12 +133,12 @@ export function WindLog() {
                 fontSize={11} 
                 tickLine={false} 
                 axisLine={false} 
-                tickFormatter={(value) => `${value} kW`} 
-                label={{ value: 'Turbine Power (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+                tickFormatter={(value) => `${value} kW`}
+                label={{ value: 'Power Output (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
               />
-              <Tooltip 
+              <Tooltip
                 contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                itemStyle={{ color: 'hsl(var(--foreground))', fontSize: '12px' }}
+                itemStyle={{ color: 'hsl(var(--foreground))' }}
                 formatter={(value: any) => [`${value} kW`, 'Wind Generation']}
               />
               <Area type="monotone" dataKey="power" stroke="#06b6d4" strokeWidth={3} fillOpacity={1} fill="url(#colorWind)" />

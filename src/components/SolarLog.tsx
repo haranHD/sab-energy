@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Sun, ThermometerSun, Zap, Activity } from 'lucide-react';
+import { Sun, ThermometerSun, Zap, Cloud, Activity } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Simulate external API data fetch
@@ -127,20 +127,20 @@ export function SolarLog() {
                 stroke="hsl(var(--muted-foreground))" 
                 fontSize={11} 
                 tickLine={false} 
-                axisLine={false} 
-                label={{ value: 'Time of Day (Hours: 00:00 to 23:00)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+                axisLine={false}
+                label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
               />
               <YAxis 
                 stroke="hsl(var(--muted-foreground))" 
                 fontSize={11} 
                 tickLine={false} 
                 axisLine={false} 
-                tickFormatter={(value) => `${value} kW`} 
-                label={{ value: 'Solar Generation (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+                tickFormatter={(value) => `${value} kW`}
+                label={{ value: 'Power Output (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
               />
               <Tooltip 
                 contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                itemStyle={{ color: 'hsl(var(--foreground))', fontSize: '12px' }}
+                itemStyle={{ color: 'hsl(var(--foreground))' }}
                 formatter={(value: any) => [`${value} kW`, 'Solar Generation']}
               />
               <Area type="monotone" dataKey="power" stroke="#f59e0b" strokeWidth={3} fillOpacity={1} fill="url(#colorPower)" />

@@ -95,7 +95,7 @@ export function OverviewDashboard() {
                   Power Telemetry
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">Real-time Actual Demand vs Expected Baseline Consumption</p>
+              <p className="text-xs text-muted-foreground mt-1">Actual Demand vs Projected Baseline across 24 hourly intervals</p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -103,18 +103,18 @@ export function OverviewDashboard() {
               <div className="flex items-center gap-2 text-xs bg-muted/50 px-2.5 py-1 rounded border border-border text-muted-foreground">
                 <span><strong>X:</strong> Time (0–23h)</span>
                 <span className="text-border">|</span>
-                <span><strong>Y:</strong> Power (kW)</span>
+                <span><strong>Y:</strong> Demand (kW)</span>
               </div>
 
               {/* Legend series */}
               <div className="flex items-center space-x-3 text-xs font-medium">
                 <div className="flex items-center space-x-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-                  <span className="text-foreground font-semibold">Actual Demand</span>
+                  <span className="text-foreground">Actual</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
                   <div className="w-3 h-0.5 border-t-2 border-dashed border-slate-500" />
-                  <span className="text-muted-foreground font-semibold">Baseline Projection</span>
+                  <span className="text-muted-foreground">Baseline</span>
                 </div>
               </div>
             </div>
@@ -122,28 +122,30 @@ export function OverviewDashboard() {
 
           <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 15, right: 25, left: 20, bottom: 25 }}>
+              <AreaChart data={chartData} margin={{ top: 15, right: 25, left: 15, bottom: 25 }}>
                 <defs>
                   <linearGradient id="colorActual" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.35}/>
                     <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.02}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-slate-800" vertical={false} />
                 
                 {/* X-Axis: Time of Day */}
                 <XAxis 
                   dataKey="time" 
-                  stroke="hsl(var(--muted-foreground))" 
+                  stroke="currentColor" 
+                  className="text-muted-foreground"
                   fontSize={11} 
                   tickLine={false} 
                   axisLine={false}
-                  label={{ value: 'Time of Day (Hours: 00:00 to 23:00)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+                  label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
                 />
                 
                 {/* Y-Axis: Power Demand in kW */}
                 <YAxis 
-                  stroke="hsl(var(--muted-foreground))" 
+                  stroke="currentColor" 
+                  className="text-muted-foreground"
                   fontSize={11} 
                   tickLine={false} 
                   axisLine={false}
