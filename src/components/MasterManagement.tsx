@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Database, MapPin, Activity, HardDrive, Plus, Search, MoreVertical, Edit2, Trash2, Map } from 'lucide-react';
+import { useState } from 'react';
+import { Database, MapPin, Activity, HardDrive, Plus, Search, Edit2, Trash2, Map } from 'lucide-react';
 import { cn } from '../utils';
 import { useParams, Navigate } from 'react-router-dom';
 

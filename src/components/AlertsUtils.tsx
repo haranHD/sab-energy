@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Settings, AlertTriangle, Clock, Zap, Save, Bell } from 'lucide-react';
 import { cn } from '../utils';
 
