@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -9,7 +9,6 @@ import {
   Settings,
   Bell,
   Activity,
-  AlertTriangle,
   Moon,
   Database,
   ChevronDown,

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, BarChart, Bar, Legend
+  Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell
 } from 'recharts';
-import { Activity, BatteryCharging, Sun, Wind, Zap, AlertTriangle, TrendingUp, AlertCircle } from 'lucide-react';
+import { Activity, Sun, Wind, Zap, AlertTriangle, AlertCircle } from 'lucide-react';
 import { cn } from '../utils';
 
 // Mock Data
