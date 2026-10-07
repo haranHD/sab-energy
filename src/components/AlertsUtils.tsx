@@ -57,7 +57,7 @@ export function AlertsUtils() {
                 <Zap className="text-rose-500" size={20} />
                 <h3 className="text-lg font-bold text-foreground">High Tension (HT) Configuration</h3>
               </div>
-              
+
               <div className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
@@ -69,7 +69,7 @@ export function AlertsUtils() {
                     <input type="number" defaultValue={10500} className="w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-foreground">Over Current Alert (A)</label>
@@ -99,7 +99,7 @@ export function AlertsUtils() {
                 <Zap className="text-blue-500" size={20} />
                 <h3 className="text-lg font-bold text-foreground">Low Tension (LT) Configuration</h3>
               </div>
-              
+
               <div className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
@@ -111,7 +111,7 @@ export function AlertsUtils() {
                     <input type="number" defaultValue={380} className="w-full px-3 py-2 bg-background border border-border rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500" />
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-foreground">Max Load Capacity (kW)</label>
@@ -143,11 +143,11 @@ export function AlertsUtils() {
               <Clock className="text-indigo-500" size={20} />
               <h3 className="text-lg font-bold text-foreground">Time-Based Usage Configuration</h3>
             </div>
-            
+
             <p className="text-sm text-muted-foreground mb-6">
               Define the Peak and Off-Peak hours for Time-of-Use (ToU) billing and utilization tracking. Energy consumed during peak hours may trigger specific alerts or rate calculations.
             </p>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="p-5 rounded-md bg-rose-500/5 border border-rose-500/20">
                 <h4 className="text-sm font-bold text-rose-600 dark:text-rose-400 mb-5 flex items-center gap-2">
@@ -183,7 +183,7 @@ export function AlertsUtils() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-6 p-5 rounded-md bg-indigo-500/5 border border-indigo-500/20">
               <h4 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-indigo-500"></div>

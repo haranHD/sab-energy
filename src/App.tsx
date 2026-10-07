@@ -31,9 +31,9 @@ const NAV_ITEMS = [
   { path: '/genset', label: 'Genset Log', icon: BatteryCharging },
   { path: '/solar', label: 'Solar PV', icon: Sun },
   { path: '/wind', label: 'Wind Turbine', icon: Wind },
-  { 
-    path: '/master', 
-    label: 'Master Data', 
+  {
+    path: '/master',
+    label: 'Master Data',
     icon: Database,
     subItems: [
       { path: '/master/assets', label: 'Assets' },
@@ -104,7 +104,7 @@ function Sidebar() {
 
 function SidebarMenuGroup({ item }: { item: any }) {
   const [isOpen, setIsOpen] = React.useState(true);
-  
+
   return (
     <div className="space-y-1">
       <button
@@ -117,7 +117,7 @@ function SidebarMenuGroup({ item }: { item: any }) {
         </div>
         {isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
       </button>
-      
+
       {isOpen && (
         <div className="pl-11 space-y-1">
           {item.subItems.map((sub: any) => (
@@ -152,11 +152,11 @@ function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: bool
           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Last Sync: Just now</span>
         </div>
-        
+
         <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md border border-border bg-card">
           <Database size={12} className="text-indigo-500" />
           <span className="text-[11px] font-medium text-foreground uppercase tracking-wider flex items-center">
-            Connected Hubs: 
+            Connected Hubs:
             <span className="ml-1.5 flex items-center justify-center bg-emerald-500 text-white min-w-[18px] h-[18px] px-1.5 rounded-full font-bold leading-none text-[10px] shadow-sm">
               12
             </span>
