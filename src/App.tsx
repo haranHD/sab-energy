@@ -33,7 +33,6 @@ const NAV_ITEMS = [
   { path: '/genset', label: 'Genset Log', icon: BatteryCharging },
   { path: '/solar', label: 'Solar PV', icon: Sun },
   { path: '/wind', label: 'Wind Turbine', icon: Wind },
-  { path: '/reports', label: 'Reports', icon: FileSpreadsheet },
   {
     path: '/master',
     label: 'Master Data',
@@ -151,13 +150,19 @@ function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: bool
       {/* Left empty spacer or brand area */}
       <div></div>
 
-      {/* Right: Exact Visual Badges & Controls */}
-      <div className="flex items-center space-x-3 shrink-0">
-        {/* Badge 1: LAST SYNC: JUST NOW */}
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-700 shadow-sm">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0"></span>
-          <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-300 uppercase">
-            LAST SYNC: JUST NOW
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md border border-border bg-card">
+          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+          <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Last Sync: Just now</span>
+        </div>
+
+        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md border border-border bg-card">
+          <Database size={12} className="text-indigo-500" />
+          <span className="text-[11px] font-medium text-foreground uppercase tracking-wider flex items-center">
+            Connected Hubs:
+            <span className="ml-1.5 flex items-center justify-center bg-emerald-500 text-white min-w-[18px] h-[18px] px-1.5 rounded-full font-bold leading-none text-[10px] shadow-sm">
+              12
+            </span>
           </span>
         </div>
 
