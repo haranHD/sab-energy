@@ -41,8 +41,15 @@ export function WindLog() {
     return (
       <div className="p-6 h-full flex items-center justify-center">
         <div className="flex flex-col items-center space-y-4 text-muted-foreground">
-          <Wind size={48} className="animate-spin text-cyan-500 opacity-50 duration-1000" />
-          <p className="animate-pulse">Fetching telemetry from Wind API...</p>
+          <div className="relative flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full border-2 border-cyan-500/20 border-t-cyan-500 animate-spin" />
+            <div className="absolute flex items-center justify-center">
+              <Wind size={24} className="text-cyan-500 animate-pulse" />
+            </div>
+          </div>
+          <p className="text-sm font-medium animate-pulse text-muted-foreground">
+            Fetching telemetry from Wind API...
+          </p>
         </div>
       </div>
     );
