@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -13,7 +13,8 @@ import {
   Database,
   ChevronDown,
   ChevronRight,
-  Sun as SunIcon
+  Sun as SunIcon,
+  FileSpreadsheet
 } from 'lucide-react';
 import { cn } from './utils';
 
@@ -24,6 +25,7 @@ import { SolarLog } from './components/SolarLog';
 import { WindLog } from './components/WindLog';
 import { GensetLog } from './components/GensetLog';
 import { AlertsUtils } from './components/AlertsUtils';
+import { HubReports } from './components/HubReports';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -31,6 +33,7 @@ const NAV_ITEMS = [
   { path: '/genset', label: 'Genset Log', icon: BatteryCharging },
   { path: '/solar', label: 'Solar PV', icon: Sun },
   { path: '/wind', label: 'Wind Turbine', icon: Wind },
+  { path: '/reports', label: 'Reports', icon: FileSpreadsheet },
   {
     path: '/master',
     label: 'Master Data',
@@ -46,7 +49,7 @@ const NAV_ITEMS = [
 
 function Sidebar() {
   return (
-    <div className="w-64 bg-card border-r border-border flex flex-col h-screen">
+    <div className="w-64 bg-card border-r border-border flex flex-col h-screen print:hidden">
       <div className="p-6 flex items-center space-x-3">
         <div className="w-8 h-8 rounded-md bg-indigo-600 flex items-center justify-center text-white shadow-sm">
           <Activity size={18} />
@@ -144,13 +147,18 @@ function SidebarMenuGroup({ item }: { item: any }) {
 
 function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: boolean }) {
   return (
-    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-10">
+    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-10 print:hidden">
+      {/* Left empty spacer or brand area */}
       <div></div>
 
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md border border-border bg-card">
-          <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-          <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Last Sync: Just now</span>
+      {/* Right: Exact Visual Badges & Controls */}
+      <div className="flex items-center space-x-3 shrink-0">
+        {/* Badge 1: LAST SYNC: JUST NOW */}
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-700 shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-emerald-400 shrink-0"></span>
+          <span className="text-[11px] font-semibold tracking-wider text-slate-600 dark:text-slate-300 uppercase">
+            LAST SYNC: JUST NOW
+          </span>
         </div>
 
         <div className="flex items-center space-x-2 px-3 py-1.5 rounded-md border border-border bg-card">
@@ -163,13 +171,22 @@ function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: bool
           </span>
         </div>
 
-        <button onClick={toggleTheme} className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
-          {isDark ? <SunIcon size={20} /> : <Moon size={20} />}
+        <div className="h-4 w-px bg-border my-auto"></div>
+
+        <button
+          onClick={toggleTheme}
+          className="p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          title="Toggle Dark / Light Theme"
+        >
+          {isDark ? <SunIcon size={17} /> : <Moon size={17} />}
         </button>
 
-        <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
-          <Bell size={20} />
-          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-red-500 border-2 border-background"></span>
+        <button
+          className="relative p-1.5 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          title="System Notifications"
+        >
+          <Bell size={17} />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-rose-500"></span>
         </button>
       </div>
     </header>
@@ -177,9 +194,9 @@ function Header({ toggleTheme, isDark }: { toggleTheme: () => void, isDark: bool
 }
 
 function App() {
-  const [isDark, setIsDark] = React.useState(false);
+  const [isDark, setIsDark] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
@@ -191,13 +208,14 @@ function App() {
 
   return (
     <Router>
-      <div className="flex h-screen bg-background overflow-hidden font-sans text-foreground">
+      <div className="flex h-screen bg-background overflow-hidden font-sans text-foreground print:h-auto print:overflow-visible print:block">
         <Sidebar />
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex-1 flex flex-col min-w-0 print:block">
           <Header toggleTheme={toggleTheme} isDark={isDark} />
-          <main className="flex-1 overflow-y-auto bg-background">
+          <main className="flex-1 overflow-y-auto bg-background print:overflow-visible print:h-auto print:p-0">
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/reports" element={<HubReports />} />
               <Route path="/master/:tab" element={<MasterManagement />} />
               <Route path="/master" element={<MasterManagement />} />
               <Route path="/eb-meter" element={<EBMeter />} />

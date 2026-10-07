@@ -86,41 +86,86 @@ export function OverviewDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-card rounded-lg p-6 shadow-md">
-          <div className="flex items-center justify-between mb-6">
+        <div className="lg:col-span-2 bg-card rounded-lg p-6 shadow-md border border-border">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
             <div>
-              <h3 className="text-base font-bold text-foreground">Demand Trend (24h)</h3>
-              <p className="text-sm text-muted-foreground">Actual vs Baseline Consumption</p>
-            </div>
-            <div className="flex items-center space-x-4 text-xs font-medium">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-cyan-500" />
-                <span className="text-foreground/80">Actual</span>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-bold text-foreground">Demand Trend (24h)</h3>
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-semibold border border-cyan-500/20">
+                  Power Telemetry
+                </span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-muted-foreground" />
-                <span className="text-muted-foreground">Baseline</span>
+              <p className="text-xs text-muted-foreground mt-1">Actual Demand vs Projected Baseline across 24 hourly intervals</p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Axis summary badge */}
+              <div className="flex items-center gap-2 text-xs bg-muted/50 px-2.5 py-1 rounded border border-border text-muted-foreground">
+                <span><strong>X:</strong> Time (0–23h)</span>
+                <span className="text-border">|</span>
+                <span><strong>Y:</strong> Demand (kW)</span>
+              </div>
+
+              {/* Legend series */}
+              <div className="flex items-center space-x-3 text-xs font-medium">
+                <div className="flex items-center space-x-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                  <span className="text-foreground">Actual</span>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <div className="w-3 h-0.5 border-t-2 border-dashed border-slate-500" />
+                  <span className="text-muted-foreground">Baseline</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="h-[300px] w-full">
+
+          <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 15, right: 25, left: 15, bottom: 25 }}>
                 <defs>
                   <linearGradient id="colorActual" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.35}/>
+                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0.02}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="time" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px' }}
-                  itemStyle={{ color: '#e2e8f0' }}
+                <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-200 dark:text-slate-800" vertical={false} />
+                
+                {/* X-Axis: Time of Day */}
+                <XAxis 
+                  dataKey="time" 
+                  stroke="currentColor" 
+                  className="text-muted-foreground"
+                  fontSize={11} 
+                  tickLine={false} 
+                  axisLine={false}
+                  label={{ value: 'Time of Day (Hours)', position: 'insideBottom', offset: -15, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
                 />
-                <Area type="monotone" dataKey="actual" stroke="#06b6d4" strokeWidth={2} fillOpacity={1} fill="url(#colorActual)" />
-                <Line type="monotone" dataKey="baseline" stroke="#475569" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                
+                {/* Y-Axis: Power Demand in kW */}
+                <YAxis 
+                  stroke="currentColor" 
+                  className="text-muted-foreground"
+                  fontSize={11} 
+                  tickLine={false} 
+                  axisLine={false}
+                  tickFormatter={(val) => `${val} kW`}
+                  label={{ value: 'Power Demand (kW)', angle: -90, position: 'insideLeft', offset: -5, fill: 'currentColor', fontSize: 11, className: 'text-muted-foreground font-medium' }}
+                />
+                
+                <Tooltip
+                  contentStyle={{ 
+                    backgroundColor: 'hsl(var(--card))', 
+                    borderColor: 'hsl(var(--border))', 
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
+                  }}
+                  itemStyle={{ color: 'hsl(var(--foreground))', fontSize: '12px' }}
+                  labelStyle={{ fontWeight: 600, color: 'hsl(var(--foreground))', marginBottom: '4px' }}
+                  formatter={(value: any, name: any) => [`${value} kW`, name === 'actual' ? 'Actual Demand' : 'Baseline Projection']}
+                />
+                <Area type="monotone" dataKey="actual" name="actual" stroke="#06b6d4" strokeWidth={2.5} fillOpacity={1} fill="url(#colorActual)" />
+                <Line type="monotone" dataKey="baseline" name="baseline" stroke="#64748b" strokeWidth={2} strokeDasharray="4 4" dot={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
